@@ -71,4 +71,11 @@ public class WithdrawalService {
     public List<Withdrawal> getWithdrawalHistory(Long investorId) {
         return withdrawalRepository.findByInvestorId(investorId);
     }
+    public List<Withdrawal> getFilteredWithdrawals(Long investorId, WithdrawalType type, WithdrawalStatus status) {
+    List<Withdrawal> all = withdrawalRepository.findByInvestorId(investorId);
+        return all.stream()
+            .filter(w -> type == null || w.getType() == type)
+            .filter(w -> status == null || w.getStatus() == status)
+            .toList();
+}
 }
